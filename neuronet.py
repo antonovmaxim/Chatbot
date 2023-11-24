@@ -1,5 +1,5 @@
 from transformers import pipeline
-
+LOGGING = True
 repository_id = "NikitaKukuzey/Urukhan_based"
 
 # load model from huggingface.co/models using our repository id
@@ -15,6 +15,8 @@ def predict(text: str) -> str:
         str: Summarized text
     '''
 
-    ...
-    
-    return classifier(text)[0]['summary_text']
+    ans = classifier(text)[0]['summary_text']
+    if LOGGING: 
+        print(f'\n\n\n\nGENERATION:\n\n"""{text}"""\n\n================>\n\n"""{ans}"""')
+        with open("log.txt", "ab") as f: f.write(bytes(f'\n\n\n\nGENERATION:\n\n"""{text}"""\n\n================>\n\n"""{ans}"""', 'utf-8', 'replace'))
+    return ans
